@@ -1,3 +1,8 @@
+const scoreDiv=document.querySelector("#score");
+const resultDiv=document.querySelector("#Result");
+
+
+
 function getComputerChoice(){
     let num=Math.floor(Math.random()*(3))+1;
     if (num === 1) return "rock";
@@ -9,6 +14,15 @@ function getComputerChoice(){
 let humanScore=0, computerScore=0;
 
 function playRound(humanChoice,computerChoice){
+    let message="";
+    if (humanScore === 5) {
+    resultDiv.textContent = "🎉 You won the game!";
+    disableButtons();
+    }
+    else if (computerScore === 5) {
+        resultDiv.textContent = "💀 Computer won the game!";
+        disableButtons();
+    }
     humanChoice=humanChoice.toLowerCase();
     computerChoice=computerChoice.toLowerCase();
 
@@ -16,15 +30,22 @@ function playRound(humanChoice,computerChoice){
 
     if(humanChoice=="rock" && computerChoice=="scissor" || humanChoice=="paper" && computerChoice=="rock" || humanChoice=="scissor" && computerChoice=="paper" ){
         humanScore+=1;
-        console.log("You win this round!");
+        message = `You win! ${humanChoice} beats ${computerChoice}`;
     }
     else if(computerChoice=="rock" && humanChoice=="scissor" || computerChoice=="paper" && humanChoice=="rock" || computerChoice=="scissor" && humanChoice=="paper" ){
         computerScore+=1;
-        console.log("You lose this round");
+        message = `You lose! ${computerChoice} beats ${humanChoice}`;
     }
-    else console.log("It's a tie");
+    else message = "It's a tie!";
 
-    console.log("Score -> HUman: ",humanScore,"Computer: ",computerScore);
+   scoreDiv.textContent = `Human : ${humanScore} | Computer : ${computerScore}`;
+    resultDiv.textContent = message;
+    if (humanScore === 5) {
+    resultDiv.textContent = "🎉 You won the game!";
+    }
+    else if (computerScore === 5) {
+        resultDiv.textContent = "💀 Computer won the game!";
+    }
 }
 
 const buttons=document.querySelectorAll(".choice");
@@ -37,5 +58,8 @@ buttons.forEach((button)=>{
     });
 });
 
+function desableButtons(){
+    buttons.forEach(button =>button.disbaled=true);
+}
 
 //button → event → function → logic
