@@ -5,13 +5,6 @@ function getComputerChoice(){
     return "scissor";
 
 }
-// console.log(getComputerChoice());
-
-function getHumanChoice(){
-    let choice=prompt("What's your choice?");
-    return choice;
-}
-// console.log(getHumanChoice());
 
 let humanScore=0, computerScore=0;
 
@@ -19,38 +12,30 @@ function playRound(humanChoice,computerChoice){
     humanChoice=humanChoice.toLowerCase();
     computerChoice=computerChoice.toLowerCase();
 
+    console.log("HUman:", humanChoice, "Computer: ",computerChoice);
+
     if(humanChoice=="rock" && computerChoice=="scissor" || humanChoice=="paper" && computerChoice=="rock" || humanChoice=="scissor" && computerChoice=="paper" ){
         humanScore+=1;
-        return;
+        console.log("You win this round!");
     }
-    if(computerChoice=="rock" && humanChoice=="scissor" || computerChoice=="paper" && humanChoice=="rock" || computerChoice=="scissor" && humanChoice=="paper" ){
+    else if(computerChoice=="rock" && humanChoice=="scissor" || computerChoice=="paper" && humanChoice=="rock" || computerChoice=="scissor" && humanChoice=="paper" ){
         computerScore+=1;
-        return;
+        console.log("You lose this round");
     }
-}
-// const humanSelection = getHumanChoice();
-// const computerSelection = getComputerChoice();
+    else console.log("It's a tie");
 
-// playRound(humanSelection, computerSelection);
-// console.log(humanScore);
-
-function playGame(){
-    for(let i=0;i<5;i++){
-        const humanSelection = getHumanChoice();
-        const computerSelection = getComputerChoice();
-        
-        playRound(humanSelection, computerSelection);
-        
-    }
-    console.log("HumanScore: "+humanScore +" ComputerScore: "+computerScore);
-    if(computerScore>humanScore){
-        console.log("You lose");
-    }
-    else if(humanScore>computerScore){
-        console.log("You win!");
-    }
-    else{
-        console.log("It's a tie!");
-    }
+    console.log("Score -> HUman: ",humanScore,"Computer: ",computerScore);
 }
-console.log(playGame());
+
+const buttons=document.querySelectorAll(".choice");
+buttons.forEach((button)=>{
+    button.addEventListener("click",() =>{
+        const humanChoice=button.id;
+        const computerChoice=getComputerChoice();
+
+        playRound(humanChoice,computerChoice);
+    });
+});
+
+
+//button → event → function → logic
